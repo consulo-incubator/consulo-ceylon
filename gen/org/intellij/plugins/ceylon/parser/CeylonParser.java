@@ -1,15 +1,17 @@
 // This is a generated file. Not intended for manual editing.
 package org.intellij.plugins.ceylon.parser;
 
-import org.jetbrains.annotations.*;
+import static org.intellij.plugins.ceylon.parser.CeylonParserUtil.*;
+import static org.intellij.plugins.ceylon.psi.CeylonTypes.*;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LanguageVersion;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import com.intellij.openapi.diagnostic.Logger;
-import static org.intellij.plugins.ceylon.psi.CeylonTypes.*;
-import static org.intellij.plugins.ceylon.parser.CeylonParserUtil.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiParser;
+import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.tree.IElementType;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class CeylonParser implements PsiParser {
@@ -17,10 +19,10 @@ public class CeylonParser implements PsiParser {
   public static Logger LOG_ = Logger.getInstance("org.intellij.plugins.ceylon.parser.CeylonParser");
 
   @NotNull
-  public ASTNode parse(IElementType root_, PsiBuilder builder_) {
+  public ASTNode parse(IElementType root_, PsiBuilder builder_, LanguageVersion languageVersion) {
     int level_ = 0;
     boolean result_;
-    builder_ = adapt_builder_(root_, builder_, this);
+    builder_ = adapt_builder_(root_, builder_, this, languageVersion);
     if (root_ == ABBREVIATED_TYPE) {
       result_ = abbreviatedType(builder_, level_ + 1);
     }

@@ -1,11 +1,10 @@
 package org.intellij.plugins.ceylon;
 
-import com.intellij.openapi.fileTypes.LanguageFileType;
-import com.intellij.openapi.util.IconLoader;
+import javax.swing.Icon;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
+import com.intellij.openapi.fileTypes.LanguageFileType;
 
 public class CeylonFileType extends LanguageFileType {
 
@@ -37,6 +36,6 @@ public class CeylonFileType extends LanguageFileType {
     @Nullable
     @Override
     public Icon getIcon() {
-        return IconLoader.getIcon("/icons/ceylon.png");
+        return CeylonIcons.Ceylon;
     }
 }

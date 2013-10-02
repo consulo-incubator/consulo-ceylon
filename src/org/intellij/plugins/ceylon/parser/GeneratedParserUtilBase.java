@@ -1,5 +1,14 @@
 package org.intellij.plugins.ceylon.parser;
 
+import gnu.trove.THashSet;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.lang.*;
 import com.intellij.lang.impl.PsiBuilderAdapter;
 import com.intellij.lang.impl.PsiBuilderImpl;
@@ -20,14 +29,6 @@ import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
 import com.intellij.util.Function;
 import com.intellij.util.containers.LimitedPool;
-import gnu.trove.THashSet;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
 
 /**
  * @author gregsh
@@ -443,9 +444,9 @@ public class GeneratedParserUtilBase {
         }
     }
 
-    public static PsiBuilder adapt_builder_(IElementType root, PsiBuilder builder, PsiParser parser) {
+    public static PsiBuilder adapt_builder_(IElementType root, PsiBuilder builder, PsiParser parser, LanguageVersion languageVersion) {
         ErrorState state = new ErrorState();
-        ErrorState.initState(root, builder, state);
+        ErrorState.initState(root, builder, state, languageVersion);
         return new Builder(builder, state, parser);
     }
 
@@ -487,15 +488,15 @@ public class GeneratedParserUtilBase {
             return ((Builder) builder).state;
         }
 
-        private static void initState(IElementType root, PsiBuilder builder, ErrorState state) {
+        private static void initState(IElementType root, PsiBuilder builder, ErrorState state, LanguageVersion languageVersion) {
             PsiFile file = builder.getUserDataUnprotected(FileContextUtil.CONTAINING_FILE_KEY);
             state.completionState = file == null ? null : file.getUserData(COMPLETION_STATE_KEY);
             Language language = file == null ? root.getLanguage() : file.getLanguage();
             state.caseSensitive = language.isCaseSensitive();
             ParserDefinition parserDefinition = LanguageParserDefinitions.INSTANCE.forLanguage(language);
             if (parserDefinition != null) {
-                state.commentTokens = parserDefinition.getCommentTokens();
-                state.whitespaceTokens = parserDefinition.getWhitespaceTokens();
+                state.commentTokens = parserDefinition.getCommentTokens(languageVersion);
+                state.whitespaceTokens = parserDefinition.getWhitespaceTokens(languageVersion);
             }
             PairedBraceMatcher matcher = LanguageBraceMatching.INSTANCE.forLanguage(language);
             state.braces = matcher == null ? null : matcher.getPairs();

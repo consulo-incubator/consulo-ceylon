@@ -1,10 +1,13 @@
 package org.intellij.plugins.ceylon.repo;
 
-import com.intellij.openapi.module.Module;
-import com.redhat.ceylon.cmr.api.*;
-
 import java.io.File;
 import java.util.Collection;
+
+import com.intellij.openapi.module.Module;
+import com.redhat.ceylon.cmr.api.ModuleQuery;
+import com.redhat.ceylon.cmr.api.ModuleSearchResult;
+import com.redhat.ceylon.cmr.api.Repository;
+import com.redhat.ceylon.cmr.api.RepositoryManagerBuilder;
 
 public class RepositoryManagerImpl implements RepositoryManager {
     private Module ideaModule;
@@ -16,7 +19,7 @@ public class RepositoryManagerImpl implements RepositoryManager {
     @Override
     public Collection<ModuleSearchResult.ModuleDetails> findArchivesByName(String moduleName) throws Exception {
         String repoUrl = "https://modules.ceylon-lang.org/test/";
-        Repository repository = new RepositoryManagerBuilder(null).repositoryBuilder().buildRepository(repoUrl);
+        Repository repository = new RepositoryManagerBuilder(null, false).repositoryBuilder().buildRepository(repoUrl);
 
         ModuleQuery query = new ModuleQuery(moduleName, ModuleQuery.Type.JVM);
         ModuleSearchResult result = new ModuleSearchResult();

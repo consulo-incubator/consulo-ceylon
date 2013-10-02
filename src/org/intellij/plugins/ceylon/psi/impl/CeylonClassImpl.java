@@ -1,5 +1,16 @@
 package org.intellij.plugins.ceylon.psi.impl;
 
+import org.intellij.plugins.ceylon.codeInsight.resolve.CeylonTypeReference;
+import org.intellij.plugins.ceylon.psi.CeylonAnnotation;
+import org.intellij.plugins.ceylon.psi.CeylonAnnotations;
+import org.intellij.plugins.ceylon.psi.CeylonClass;
+import org.intellij.plugins.ceylon.psi.CeylonDeclaration;
+import org.intellij.plugins.ceylon.psi.CeylonFile;
+import org.intellij.plugins.ceylon.psi.CeylonTypes;
+import org.intellij.plugins.ceylon.psi.stub.ClassStub;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.extapi.psi.StubBasedPsiElementBase;
 import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
@@ -10,13 +21,6 @@ import com.intellij.psi.PsiReference;
 import com.intellij.psi.stubs.IStubElementType;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
-import com.yourkit.util.Strings;
-import org.intellij.plugins.ceylon.codeInsight.resolve.CeylonTypeReference;
-import org.intellij.plugins.ceylon.psi.*;
-import org.intellij.plugins.ceylon.psi.stub.ClassStub;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class CeylonClassImpl extends StubBasedPsiElementBase<ClassStub> implements CeylonClass {
 
@@ -121,7 +125,11 @@ public abstract class CeylonClassImpl extends StubBasedPsiElementBase<ClassStub>
 
     @Override
     public String toString() {
-        String name = Strings.notNull(getName(), " (unnamed)");
+		String name = getName();
+		if(name == null)
+		{
+			name = "(unnamed)";
+		}
         String type;
 
         if (isInterface()) {

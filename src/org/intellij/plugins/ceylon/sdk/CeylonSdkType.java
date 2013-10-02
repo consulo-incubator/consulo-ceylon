@@ -1,32 +1,52 @@
 package org.intellij.plugins.ceylon.sdk;
 
-import com.google.common.io.Files;
-import com.google.common.io.LineProcessor;
-import com.intellij.openapi.projectRoots.*;
-import com.intellij.openapi.roots.OrderRootType;
-import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.InvalidDataException;
-import com.intellij.openapi.util.WriteExternalException;
-import com.intellij.openapi.vfs.JarFileSystem;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.util.ArrayUtil;
-import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
-public class CeylonSdk extends SdkType implements JavaSdkType {
+import javax.swing.Icon;
 
-    public CeylonSdk() {
+import org.intellij.plugins.ceylon.CeylonIcons;
+import org.jdom.Element;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.google.common.io.Files;
+import com.google.common.io.LineProcessor;
+import com.intellij.ide.highlighter.JarArchiveFileType;
+import com.intellij.openapi.projectRoots.AdditionalDataConfigurable;
+import com.intellij.openapi.projectRoots.JavaSdk;
+import com.intellij.openapi.projectRoots.JavaSdkType;
+import com.intellij.openapi.projectRoots.JavaSdkVersion;
+import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.projectRoots.SdkAdditionalData;
+import com.intellij.openapi.projectRoots.SdkModel;
+import com.intellij.openapi.projectRoots.SdkModificator;
+import com.intellij.openapi.projectRoots.SdkType;
+import com.intellij.openapi.roots.OrderRootType;
+import com.intellij.openapi.vfs.ArchiveFileSystem;
+import com.intellij.openapi.vfs.VirtualFile;
+
+public class CeylonSdkType extends SdkType {
+
+    public CeylonSdkType() {
         super("Ceylon SDK");
     }
 
-    @Nullable
+	@Nullable
+	@Override
+	public Icon getIcon()
+	{
+		return CeylonIcons.Ceylon;
+	}
+
+	@Nullable
+	@Override
+	public Icon getGroupIcon()
+	{
+		return getIcon();
+	}
+
+	@Nullable
     @Override
     public String suggestHomePath() {
         return null;
@@ -77,7 +97,7 @@ public class CeylonSdk extends SdkType implements JavaSdkType {
     @Nullable
     @Override
     public AdditionalDataConfigurable createAdditionalDataConfigurable(SdkModel sdkModel, SdkModificator sdkModificator) {
-        return new CeylonSdkAdditionalDataConfigurable(sdkModel, sdkModificator);
+        return null;
     }
 
     @Override
@@ -85,79 +105,14 @@ public class CeylonSdk extends SdkType implements JavaSdkType {
         return "Ceylon SDK";
     }
 
-    @Nullable
-    @Override
-    public SdkAdditionalData loadAdditionalData(Element additional) {
-        CeylonSdkAdditionalData additionalData = new CeylonSdkAdditionalData();
-        try {
-            additionalData.readExternal(additional);
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
-        }
-        return additionalData;
-    }
-
     @Override
     public void saveAdditionalData(SdkAdditionalData additionalData, Element additional) {
-        if (additionalData instanceof CeylonSdkAdditionalData) {
-            try {
-                ((CeylonSdkAdditionalData) additionalData).writeExternal(additional);
-            } catch (WriteExternalException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    @Override
-    public String getBinPath(Sdk sdk) {
-        Sdk internalSdk = getInternalSdk(sdk);
-        return internalSdk == null ? null : JavaSdk.getInstance().getBinPath(internalSdk);
-    }
-
-    @Override
-    public String getToolsPath(Sdk sdk) {
-        Sdk internalSdk = getInternalSdk(sdk);
-        return internalSdk == null ? null : JavaSdk.getInstance().getToolsPath(internalSdk);
-    }
-
-    @Override
-    public String getVMExecutablePath(Sdk sdk) {
-        Sdk internalSdk = getInternalSdk(sdk);
-        return internalSdk == null ? null : JavaSdk.getInstance().getVMExecutablePath(internalSdk);
-    }
-
-    @Nullable
-    public static Sdk getInternalSdk(@Nullable Sdk sdk) {
-        if (sdk == null) {
-            return null;
-        }
-        SdkAdditionalData additionalData = sdk.getSdkAdditionalData();
-
-        if (additionalData instanceof CeylonSdkAdditionalData) {
-            return ((CeylonSdkAdditionalData) additionalData).getJavaSdk();
-        }
-        return null;
     }
 
     @Override
     public boolean setupSdkPaths(final Sdk sdk, final SdkModel sdkModel) {
-        final List<String> javaSdks = new ArrayList<String>();
-        final Sdk[] sdks = sdkModel.getSdks();
-        for (Sdk jdk : sdks) {
-            if (isValidInternalJdk(jdk)) {
-                javaSdks.add(jdk.getName());
-            }
-        }
-        final int choice = Messages.showChooseDialog("Select Java SDK to be used as the internal platform", "Select Internal Java Platform",
-                ArrayUtil.toStringArray(javaSdks), javaSdks.get(0), Messages.getQuestionIcon());
-
         SdkModificator sdkModificator = sdk.getSdkModificator();
-
-        if (choice == -1) {
-            return false;
-        }
-
-        sdkModificator.setSdkAdditionalData(new CeylonSdkAdditionalData(sdkModel.findSdk(javaSdks.get(choice))));
 
         VirtualFile homeDirectory = sdk.getHomeDirectory();
 
@@ -167,7 +122,7 @@ public class CeylonSdk extends SdkType implements JavaSdkType {
             if (libDir != null) {
                 for (VirtualFile file : libDir.getChildren()) {
                     if ("jar".equals(file.getExtension())) {
-                        VirtualFile jar = JarFileSystem.getInstance().findFileByPath(file.getPath() + JarFileSystem.JAR_SEPARATOR);
+                        VirtualFile jar = JarArchiveFileType.INSTANCE.getFileSystem().findFileByPath(file.getPath() + ArchiveFileSystem.ARCHIVE_SEPARATOR);
                         sdkModificator.addRoot(jar, OrderRootType.CLASSES);
                     }
                 }
@@ -190,7 +145,7 @@ public class CeylonSdk extends SdkType implements JavaSdkType {
                 String.format("repo/%s/%s/%s-%s.%s", jarName.replace('.', '/'), sdk.getVersionString(), jarName, sdk.getVersionString(), extension));
 
         if (file != null) {
-            VirtualFile jar = JarFileSystem.getInstance().findFileByPath(file.getPath() + JarFileSystem.JAR_SEPARATOR);
+            VirtualFile jar = JarArchiveFileType.INSTANCE.getFileSystem().findFileByPath(file.getPath() + ArchiveFileSystem.ARCHIVE_SEPARATOR);
             sdkModificator.addRoot(jar, OrderRootType.CLASSES);
         }
     }

@@ -1,23 +1,24 @@
 package org.intellij.plugins.ceylon.highlighting;
 
+import gnu.trove.THashMap;
+
+import java.util.Map;
+
+import org.intellij.plugins.ceylon.parser.CeylonLexer;
+import org.intellij.plugins.ceylon.psi.CeylonTypes;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.lexer.Lexer;
-import com.intellij.openapi.editor.SyntaxHighlighterColors;
+import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterBase;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.TokenSet;
-import gnu.trove.THashMap;
-import org.intellij.plugins.ceylon.parser.CeylonLexer;
-import org.intellij.plugins.ceylon.psi.CeylonTypes;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 public class CeylonHighlighter extends SyntaxHighlighterBase {
     private static final Map<IElementType, TextAttributesKey> keys;
 
     public static final TextAttributesKey KEYWORD_KEY = TextAttributesKey.createTextAttributesKey(
-            "CEYLON.KEYWORD", SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
+            "CEYLON.KEYWORD", DefaultLanguageHighlighterColors.KEYWORD
     );
 
     static {
@@ -66,26 +67,26 @@ public class CeylonHighlighter extends SyntaxHighlighterBase {
 
         fillMap(keys, keywords, KEYWORD_KEY);
 
-        keys.put(CeylonTypes.MULTI_LINE_COMMENT, SyntaxHighlighterColors.DOC_COMMENT);
-        keys.put(CeylonTypes.LINE_COMMENT, SyntaxHighlighterColors.LINE_COMMENT);
+        keys.put(CeylonTypes.MULTI_LINE_COMMENT, DefaultLanguageHighlighterColors.DOC_COMMENT);
+        keys.put(CeylonTypes.LINE_COMMENT, DefaultLanguageHighlighterColors.LINE_COMMENT);
 
-        keys.put(CeylonTypes.NATURAL_LITERAL, SyntaxHighlighterColors.NUMBER);
-        keys.put(CeylonTypes.FLOAT_LITERAL, SyntaxHighlighterColors.NUMBER);
-        keys.put(CeylonTypes.QUOTED_LITERAL, SyntaxHighlighterColors.STRING);
-        keys.put(CeylonTypes.CHAR_LITERAL, SyntaxHighlighterColors.STRING);
-        keys.put(CeylonTypes.STRING_LITERAL, SyntaxHighlighterColors.STRING);
+        keys.put(CeylonTypes.NATURAL_LITERAL, DefaultLanguageHighlighterColors.NUMBER);
+        keys.put(CeylonTypes.FLOAT_LITERAL, DefaultLanguageHighlighterColors.NUMBER);
+        keys.put(CeylonTypes.QUOTED_LITERAL, DefaultLanguageHighlighterColors.STRING);
+        keys.put(CeylonTypes.CHAR_LITERAL, DefaultLanguageHighlighterColors.STRING);
+        keys.put(CeylonTypes.STRING_LITERAL, DefaultLanguageHighlighterColors.STRING);
 
-        keys.put(CeylonTypes.OP_LPAREN, SyntaxHighlighterColors.PARENTHS);
-        keys.put(CeylonTypes.OP_RPAREN, SyntaxHighlighterColors.PARENTHS);
-        keys.put(CeylonTypes.OP_LBRACE, SyntaxHighlighterColors.BRACES);
-        keys.put(CeylonTypes.OP_RBRACE, SyntaxHighlighterColors.BRACES);
-        keys.put(CeylonTypes.OP_LBRACKET, SyntaxHighlighterColors.BRACKETS);
-        keys.put(CeylonTypes.OP_RBRACKET, SyntaxHighlighterColors.BRACKETS);
-        keys.put(CeylonTypes.OP_BRACKETS, SyntaxHighlighterColors.BRACES);
+        keys.put(CeylonTypes.OP_LPAREN, DefaultLanguageHighlighterColors.PARENTHESES);
+        keys.put(CeylonTypes.OP_RPAREN, DefaultLanguageHighlighterColors.PARENTHESES);
+        keys.put(CeylonTypes.OP_LBRACE, DefaultLanguageHighlighterColors.BRACES);
+        keys.put(CeylonTypes.OP_RBRACE, DefaultLanguageHighlighterColors.BRACES);
+        keys.put(CeylonTypes.OP_LBRACKET, DefaultLanguageHighlighterColors.BRACKETS);
+        keys.put(CeylonTypes.OP_RBRACKET, DefaultLanguageHighlighterColors.BRACKETS);
+        keys.put(CeylonTypes.OP_BRACKETS, DefaultLanguageHighlighterColors.BRACES);
 
-        keys.put(CeylonTypes.OP_DOT, SyntaxHighlighterColors.DOT);
-        keys.put(CeylonTypes.OP_SEMI_COLUMN, SyntaxHighlighterColors.JAVA_SEMICOLON);
-        keys.put(CeylonTypes.OP_COMMA, SyntaxHighlighterColors.COMMA);
+        keys.put(CeylonTypes.OP_DOT, DefaultLanguageHighlighterColors.DOT);
+        keys.put(CeylonTypes.OP_SEMI_COLUMN, DefaultLanguageHighlighterColors.SEMICOLON);
+        keys.put(CeylonTypes.OP_COMMA, DefaultLanguageHighlighterColors.COMMA);
     }
 
     @NotNull
