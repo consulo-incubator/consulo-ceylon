@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.consulo.ceylon.module.extension.CeylonModuleExtension;
-import org.consulo.java.platform.module.extension.JavaModuleExtension;
+import org.consulo.java.module.extension.JavaModuleExtension;
 import org.intellij.plugins.ceylon.CeylonFileType;
 import org.intellij.plugins.ceylon.sdk.CeylonSdkType;
 import org.jetbrains.annotations.NotNull;

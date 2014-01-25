@@ -30,13 +30,6 @@ public class CeylonModuleExtensionProvider implements ModuleExtensionProvider<Ce
 
 	@NotNull
 	@Override
-	public Class<CeylonModuleExtension> getImmutableClass()
-	{
-		return CeylonModuleExtension.class;
-	}
-
-	@NotNull
-	@Override
 	public CeylonModuleExtension createImmutable(@NotNull String s, @NotNull Module module)
 	{
 		return new CeylonModuleExtension(s, module);

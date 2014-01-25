@@ -1,14 +1,21 @@
 package org.intellij.plugins.ceylon.annotator;
 
+import org.intellij.plugins.ceylon.psi.CeylonAnnotationName;
+import org.intellij.plugins.ceylon.psi.CeylonCompilerAnnotation;
+import org.intellij.plugins.ceylon.psi.CeylonTypeName;
+import org.intellij.plugins.ceylon.psi.CeylonTypeParameter;
+import org.intellij.plugins.ceylon.psi.CeylonTypeParameters;
+import org.intellij.plugins.ceylon.psi.CeylonTypedDeclaration;
+import org.intellij.plugins.ceylon.psi.CeylonTypes;
+import org.intellij.plugins.ceylon.psi.CeylonVisitor;
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.JavaHighlightingColors;
 import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.editor.colors.CodeInsightColors;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
-import org.intellij.plugins.ceylon.psi.*;
-import org.jetbrains.annotations.NotNull;
 
 public class CeylonAnnotator extends CeylonVisitor implements Annotator {
     private AnnotationHolder annotationHolder;
@@ -31,7 +38,7 @@ public class CeylonAnnotator extends CeylonVisitor implements Annotator {
         super.visitAnnotationName(o);
 
         Annotation anno = annotationHolder.createInfoAnnotation(o, null);
-        anno.setTextAttributes(CodeInsightColors.ANNOTATION_NAME_ATTRIBUTES);
+        anno.setTextAttributes(JavaHighlightingColors.ANNOTATION_NAME);
     }
 
     @Override
@@ -40,7 +47,7 @@ public class CeylonAnnotator extends CeylonVisitor implements Annotator {
 
         @SuppressWarnings("ConstantConditions")
         Annotation anno = annotationHolder.createInfoAnnotation(o.getNode().findChildByType(CeylonTypes.OP_ANNOTATION), null);
-        anno.setTextAttributes(CodeInsightColors.ANNOTATION_NAME_ATTRIBUTES);
+        anno.setTextAttributes(JavaHighlightingColors.ANNOTATION_NAME);
     }
 
     @Override
@@ -49,11 +56,11 @@ public class CeylonAnnotator extends CeylonVisitor implements Annotator {
 
         if (PsiTreeUtil.getParentOfType(name, CeylonTypeParameter.class) != null) {
             Annotation anno = annotationHolder.createInfoAnnotation(name, null);
-            anno.setTextAttributes(CodeInsightColors.TYPE_PARAMETER_NAME_ATTRIBUTES);
+            anno.setTextAttributes(JavaHighlightingColors.TYPE_PARAMETER_NAME);
         } else {
             if (getTypeParameterInParentDeclaration(name) != null) {
                 Annotation anno = annotationHolder.createInfoAnnotation(name, null);
-                anno.setTextAttributes(CodeInsightColors.TYPE_PARAMETER_NAME_ATTRIBUTES);
+                anno.setTextAttributes(JavaHighlightingColors.TYPE_PARAMETER_NAME);
             }
         }
     }
