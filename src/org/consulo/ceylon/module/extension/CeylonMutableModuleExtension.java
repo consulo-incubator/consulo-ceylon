@@ -17,12 +17,9 @@ import com.intellij.openapi.roots.ModifiableRootModel;
  */
 public class CeylonMutableModuleExtension extends CeylonModuleExtension implements MutableModuleExtensionWithSdk<CeylonModuleExtension>
 {
-	private CeylonModuleExtension myCeylonModuleExtension;
-
-	public CeylonMutableModuleExtension(@NotNull String id, @NotNull Module module, @NotNull CeylonModuleExtension ceylonModuleExtension)
+	public CeylonMutableModuleExtension(@NotNull String id, @NotNull Module module)
 	{
 		super(id, module);
-		myCeylonModuleExtension = ceylonModuleExtension;
 	}
 
 	@NotNull
@@ -46,14 +43,8 @@ public class CeylonMutableModuleExtension extends CeylonModuleExtension implemen
 	}
 
 	@Override
-	public boolean isModified()
+	public boolean isModified(@NotNull CeylonModuleExtension extension)
 	{
-		return isModifiedImpl(myCeylonModuleExtension);
-	}
-
-	@Override
-	public void commit()
-	{
-		myCeylonModuleExtension.commit(this);
+		return isModifiedImpl(extension);
 	}
 }

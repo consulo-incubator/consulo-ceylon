@@ -37,8 +37,8 @@ public class CeylonModuleExtensionProvider implements ModuleExtensionProvider<Ce
 
 	@NotNull
 	@Override
-	public CeylonMutableModuleExtension createMutable(@NotNull String s, @NotNull Module module, @NotNull CeylonModuleExtension ceylonModuleExtension)
+	public CeylonMutableModuleExtension createMutable(@NotNull String s, @NotNull Module module)
 	{
-		return new CeylonMutableModuleExtension(s, module, ceylonModuleExtension);
+		return new CeylonMutableModuleExtension(s, module);
 	}
 }
