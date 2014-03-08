@@ -38,7 +38,12 @@
 		<lang.formatter language="Ceylon" implementationClass="org.intellij.plugins.ceylon.formatting.CeylonFormattingModelBuilder"/>
 		<lang.psiStructureViewFactory language="Ceylon" implementationClass="org.intellij.plugins.ceylon.structureView.CeylonStructureViewFactory"/>
 
-		<moduleExtensionProvider key="ceylon" parent-key="java" implementationClass="org.consulo.ceylon.module.extension.CeylonModuleExtensionProvider" />
+		<moduleExtensionProvider key="ceylon"
+								 parentKey="java"
+								 icon="/icons/ceylon.png"
+								 name="Ceylon"
+								 immutableClass="org.consulo.ceylon.module.extension.CeylonModuleExtension"
+								 mutableClass="org.consulo.ceylon.module.extension.CeylonMutableModuleExtension" />
 
 		<stubElementTypeHolder class="org.intellij.plugins.ceylon.psi.CeylonTypes"/>
 		<stubIndex implementation="org.intellij.plugins.ceylon.psi.stub.ClassIndex"/>
