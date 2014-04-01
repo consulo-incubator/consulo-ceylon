@@ -17,8 +17,9 @@ public class CeylonModuleExtension extends ModuleExtensionWithSdkImpl<CeylonModu
 		super(id, module);
 	}
 
+	@NotNull
 	@Override
-	protected Class<? extends SdkType> getSdkTypeClass()
+	public Class<? extends SdkType> getSdkTypeClass()
 	{
 		return CeylonSdkType.class;
 	}
