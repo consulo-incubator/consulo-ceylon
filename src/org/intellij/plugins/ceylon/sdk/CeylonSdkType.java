@@ -111,7 +111,7 @@ public class CeylonSdkType extends SdkType {
     }
 
     @Override
-    public boolean setupSdkPaths(final Sdk sdk, final SdkModel sdkModel) {
+    public void setupSdkPaths(final Sdk sdk) {
         SdkModificator sdkModificator = sdk.getSdkModificator();
 
         VirtualFile homeDirectory = sdk.getHomeDirectory();
@@ -136,8 +136,6 @@ public class CeylonSdkType extends SdkType {
         }
 
         sdkModificator.commitChanges();
-
-        return true;
     }
 
     private void addJarFromRepo(Sdk sdk, @NotNull VirtualFile homeDirectory, SdkModificator sdkModificator, String jarName, String extension) {
