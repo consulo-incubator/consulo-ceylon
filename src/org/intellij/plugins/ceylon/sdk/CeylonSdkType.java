@@ -46,12 +46,6 @@ public class CeylonSdkType extends SdkType {
 		return getIcon();
 	}
 
-	@Nullable
-    @Override
-    public String suggestHomePath() {
-        return null;
-    }
-
     @Override
     public boolean isValidSdkHome(String path) {
         return new File(path, "bin/ceylon").exists();
