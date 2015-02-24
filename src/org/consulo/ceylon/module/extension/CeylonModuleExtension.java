@@ -4,7 +4,7 @@ import org.consulo.module.extension.impl.ModuleExtensionWithSdkImpl;
 import org.intellij.plugins.ceylon.sdk.CeylonSdkType;
 import org.jetbrains.annotations.NotNull;
 import com.intellij.openapi.projectRoots.SdkType;
-import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootLayer;
 
 /**
  * @author VISTALL
@@ -12,9 +12,9 @@ import com.intellij.openapi.roots.ModifiableRootModel;
  */
 public class CeylonModuleExtension extends ModuleExtensionWithSdkImpl<CeylonModuleExtension>
 {
-	public CeylonModuleExtension(@NotNull String id, @NotNull ModifiableRootModel module)
+	public CeylonModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
 	{
-		super(id, module);
+		super(id, moduleRootLayer);
 	}
 
 	@NotNull

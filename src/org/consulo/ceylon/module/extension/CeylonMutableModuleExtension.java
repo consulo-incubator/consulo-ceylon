@@ -8,7 +8,7 @@ import org.consulo.module.extension.ui.ModuleExtensionWithSdkPanel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.projectRoots.Sdk;
-import com.intellij.openapi.roots.ModifiableRootModel;
+import com.intellij.openapi.roots.ModuleRootLayer;
 
 /**
  * @author VISTALL
@@ -16,9 +16,9 @@ import com.intellij.openapi.roots.ModifiableRootModel;
  */
 public class CeylonMutableModuleExtension extends CeylonModuleExtension implements MutableModuleExtensionWithSdk<CeylonModuleExtension>
 {
-	public CeylonMutableModuleExtension(@NotNull String id, @NotNull ModifiableRootModel module)
+	public CeylonMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
 	{
-		super(id, module);
+		super(id, moduleRootLayer);
 	}
 
 	@NotNull
